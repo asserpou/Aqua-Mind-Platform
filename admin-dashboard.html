@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AquaMind</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin-dashboard.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="CAquaMind_logo.png" alt="AquaMind Logo" class="sidebar-logo">
+                <h2>Admin Panel</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" onclick="showSection('products', this)">
+                    <i class="fas fa-box"></i> Products
+                </a>
+                <a href="#" class="nav-item" onclick="showSection('users', this)">
+                    <i class="fas fa-users"></i> User Accounts
+                </a>
+            </nav>
+
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- ===== PRODUCTS SECTION ===== -->
+            <section id="section-products">
+                <header class="content-header">
+                    <h1>Product Management</h1>
+                    <div class="header-actions">
+                        <button class="add-product-btn" onclick="openAddModal()">
+                            <i class="fas fa-plus"></i> Add New Product
+                        </button>
+                    </div>
+                </header>
+
+                <div class="products-table-container">
+                    <table class="products-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Rating</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                            <!-- Products will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===== USER ACCOUNTS SECTION ===== -->
+            <section id="section-users" style="display:none;">
+                <header class="content-header">
+                    <h1>User Accounts</h1>
+                    <div class="header-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="userSearchInput" placeholder="Search by email..." oninput="searchUsers()">
+                            <button class="search-clear" id="searchClearBtn" onclick="clearSearch()" style="display:none;">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="users-stats" id="usersStats"></div>
+
+                <div class="products-table-container">
+                    <table class="products-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Plan</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="7" style="text-align:center;padding:2rem;">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading users...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ===== Edit User Modal ===== -->
+    <div class="modal" id="userModal">
+        <div class="modal-content" style="max-width:560px;">
+            <div class="modal-header">
+                <h2>Edit User</h2>
+                <button class="close-btn" onclick="closeUserModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="userForm" class="product-form">
+                <input type="hidden" id="editUserId">
+
+                <!-- User avatar header inside modal -->
+                <div class="user-modal-avatar" id="userModalAvatar"></div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editFirstName">First Name *</label>
+                        <input type="text" id="editFirstName" required placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName">Last Name *</label>
+                        <input type="text" id="editLastName" required placeholder="Last name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editEmail">Email *</label>
+                    <input type="email" id="editEmail" required placeholder="user@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="editPhone">Phone Number *</label>
+                    <input type="text" id="editPhone" required placeholder="01XXXXXXXXX">
+                </div>
+
+                <div class="form-group">
+                    <label for="editAccountType">Subscription Plan *</label>
+                    <select id="editAccountType" required>
+                        <option value="standard">Standard</option>
+                        <option value="premium">Premium</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeUserModal()">Cancel</button>
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== Add/Edit Product Modal ===== -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Product</h2>
+                <button class="close-btn" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="productForm" class="product-form">
+                <input type="hidden" id="productId">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productNameEn">Product Name (English) *</label>
+                        <input type="text" id="productNameEn" required placeholder="Enter product name in English">
+                    </div>
+                    <div class="form-group">
+                        <label for="productNameAr">Product Name (Arabic) *</label>
+                        <input type="text" id="productNameAr" required placeholder="أدخل اسم المنتج بالعربية" dir="rtl">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productPrice">Price ($) *</label>
+                    <input type="number" id="productPrice" step="0.01" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productDescriptionEn">Short Description (English) *</label>
+                        <input type="text" id="productDescriptionEn" required placeholder="Enter short description in English">
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescriptionAr">Short Description (Arabic) *</label>
+                        <input type="text" id="productDescriptionAr" required placeholder="أدخل وصف قصير بالعربية" dir="rtl">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productFullDescriptionEn">Full Description (English) *</label>
+                        <textarea id="productFullDescriptionEn" rows="4" required placeholder="Enter full description in English"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="productFullDescriptionAr">Full Description (Arabic) *</label>
+                        <textarea id="productFullDescriptionAr" rows="4" required placeholder="أدخل الوصف الكامل بالعربية" dir="rtl"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productRating">Rating (0-5) *</label>
+                        <input type="number" id="productRating" step="0.1" min="0" max="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productReviews">Number of Reviews *</label>
+                        <input type="number" id="productReviews" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productUsesEn">Uses (English - one per line) *</label>
+                        <textarea id="productUsesEn" rows="5" required placeholder="Enter uses in English (one per line)"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="productUsesAr">Uses (Arabic - one per line) *</label>
+                        <textarea id="productUsesAr" rows="5" required placeholder="أدخل الاستخدامات بالعربية (واحد في كل سطر)" dir="rtl"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productMainImageFile">Main Product Image</label>
+                    <p class="field-hint">Optional - Primary image shown in product list. If not provided, first gallery image will be used.</p>
+                    <input type="file" id="productMainImageFile" accept="image/*" class="file-input">
+                    <div class="image-preview" id="mainImagePreview"></div>
+                    <input type="hidden" id="productMainImage">
+                </div>
+
+                <div class="form-group">
+                    <label for="productGalleryFiles">Product Gallery Images *</label>
+                    <p class="field-hint">Required - Upload multiple images for the product gallery.</p>
+                    <input type="file" id="productGalleryFiles" accept="image/*" multiple class="file-input" required>
+                    <div class="gallery-preview" id="galleryPreview"></div>
+                    <input type="hidden" id="productGallery">
+                    <p class="gallery-count" id="galleryCount">0 images selected</p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-save"></i> Save Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="admin-dashboard.js"></script>
+</body>
+
+</html>

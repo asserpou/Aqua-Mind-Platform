@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AquaMind</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.miassets/css/n.css">
+    <link rel="stylesheet" href="admin-dashboarassets/css/d.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/images/CAquaMind_logo.png" alt="AquaMind Logo" class="sidebar-logo">
+                <h2>Admin Panel</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-box"></i> Products
+                </a>
+            </nav>
+
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Product Management</h1>
+                <div class="header-actions">
+                    <button class="add-product-btn" onclick="openAddModal()">
+                        <i class="fas fa-plus"></i> Add New Product
+                    </button>
+                </div>
+            </header>
+
+            <div class="products-table-container">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Rating</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Product</h2>
+                <button class="close-btn" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="productForm" class="product-form">
+                <input type="hidden" id="productId">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productName">Product Name *</label>
+                        <input type="text" id="productName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productPrice">Price ($) *</label>
+                        <input type="number" id="productPrice" step="0.01" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productDescription">Short Description *</label>
+                    <input type="text" id="productDescription" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="productFullDescription">Full Description *</label>
+                    <textarea id="productFullDescription" rows="4" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productRating">Rating (0-5) *</label>
+                        <input type="number" id="productRating" step="0.1" min="0" max="5" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productReviews">Number of Reviews *</label>
+                        <input type="number" id="productReviews" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productUses">Uses (one per line) *</label>
+                    <textarea id="productUses" rows="5" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="productMainImage">Main Product Image</label>
+                    <p class="field-hint">Optional - This will be the primary image shown in the product list. If not
+                        provided, the first gallery image will be used.</p>
+                    <input type="file" id="productMainImageFile" accept="image/*" class="file-input">
+                    <div class="image-preview" id="mainImagePreview"></div>
+                    <input type="hidden" id="productMainImage">
+                </div>
+
+                <div class="form-group">
+                    <label for="productGallery">Product Gallery Images *</label>
+                    <p class="field-hint">Required - Upload multiple images for the product gallery. Click to select
+                        multiple files at once.</p>
+                    <input type="file" id="productGalleryFiles" accept="image/*" multiple class="file-input" required>
+                    <div class="gallery-preview" id="galleryPreview"></div>
+                    <input type="hidden" id="productGallery">
+                    <p class="gallery-count" id="galleryCount">0 images selected</p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-save"></i> Save Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="assets/js/admin-dashboard.js"></script>
+</body>
+
+</html>

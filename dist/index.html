@@ -1,0 +1,400 @@
+﻿<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AquaMind</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/stylassets/css/e.css" />
+    <link rel="stylesheet" href="assets/css/chatboassets/css/t.css">
+
+    <!-- Google Fonts (Cairo for Arabic) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome (loaded ONCE here) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.miassets/css/n.css"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/assets/images/AquaMind_logo.png" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <div class="navbar">
+      <a href="index.html" class="logo-container">
+        <img src="assets/images/assets/images/CAquaMind_logo.png" class="logo-img" alt="AquaMind Logo" />
+        <span class="logo-text">AquaMind</span>
+      </a>
+
+      <div class="menu">
+        <a href="index.html" data-key="home">Home</a>
+        <a href="stories.html" data-key="stories">Stories&Charts</a>
+        <a href="aquaguard.html" data-key="aquaguard">AquaGuard</a>
+        <a href="interactive-house.html" data-key="interactive"
+          >InteractiveHouse</a
+        >
+        <a href="marketplace.html" data-key="marketplace">MarketPlace</a>
+      </div>
+
+      <div class="nav-icons">
+        <div class="divider"></div>
+        <i class="fas fa-user"></i>
+
+        <!-- Language -->
+        <div class="lang-dropdown">
+          <i class="fas fa-globe" id="lang-toggle"></i>
+          <div class="lang-menu" id="lang-menu">
+            <div class="lang-option" data-lang="en">🇬🇧 English</div>
+            <div class="lang-option" data-lang="ar">🇸🇦 عربي</div>
+          </div>
+        </div>
+
+        <i class="fas fa-sun" id="theme-toggle"></i>
+        
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero scroll-reveal">
+      <div class="wave-header">
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+          <h1>
+            <span data-key="hero1">Smarter Water</span><br />
+            <span data-key="hero2">Solutions for a Greener</span><br />
+            <span data-key="hero3">Tomorrow</span>
+          </h1>
+
+          <div class="buttons">
+            <button
+              class="btn"
+              data-key="btn1"
+              onclick="window.location.href = 'aquaguard.html'"
+            >
+              AquaGuard
+            </button>
+            <button
+              class="btn"
+              data-key="btn2"
+              onclick="window.location.href = 'interactive-house.html'"
+            >
+              InteractiveHouse
+            </button>
+          </div>
+        </div>
+
+        <!-- FIX: changed xlink:href to href (xlink:href is deprecated in modern browsers) -->
+        <svg
+          class="waves"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 24 150 28"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <path
+              id="wave-path"
+              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+            />
+          </defs>
+          <g class="moving-waves">
+            <use
+              href="#wave-path"
+              x="48"
+              y="0"
+              fill="#def2fc"
+              fill-opacity="0.6"
+            />
+            <use
+              href="#wave-path"
+              x="48"
+              y="3"
+              fill="#caeafa"
+              fill-opacity="0.6"
+            />
+            <use
+              href="#wave-path"
+              x="48"
+              y="7"
+              fill="#c0e7fa"
+              fill-opacity="0.6"
+            />
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- WATER ALERT POPUP -->
+    <div class="water-alert-overlay" id="waterAlertOverlay">
+        <div class="water-alert-popup">
+            <button class="close-alert" onclick="closeWaterAlert()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="alert-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            
+            <h2 class="alert-title">Water is Running Out!</h2>
+            
+            <div class="countdown-container">
+                <div class="countdown-circle">
+                    <svg class="countdown-svg" viewBox="0 0 100 100">
+                        <defs>
+                            <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#42a5f5;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#2196f3;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ff5252;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#f44336;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle class="countdown-bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="countdown-progress" cx="50" cy="50" r="45" id="countdownCircle"></circle>
+                    </svg>
+                    <div class="countdown-number" id="countdownNumber">10</div>
+                </div>
+            </div>
+            
+            <p class="alert-message">Take action now to save water and protect our future!</p>
+            
+            <button class="alert-action-btn" onclick="goToAquaGuard()">
+                <i class="fas fa-gamepad"></i>
+                <span>Play AquaGuard Game</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- FIX: main-section now properly wraps and closes all inner sections -->
+    <section class="main-section ">
+      <!-- WHO WE ARE -->
+      <section class="about-section scroll-reveal">
+        <div class="about-container">
+          <!-- Left Text -->
+          <div class="about-text">
+            <h2 data-key="aboutTitle">What is AquaMind</h2>
+            <p data-key="aboutText">
+              AquaMind delivers an interactive experience through a gamified
+              learning journey and a virtual smart house, helping users
+              understand how daily actions affect water consumption. By
+              combining fun challenges with real-life simulations, the platform
+              builds awareness, encourages responsible behavior, and promotes 
+              sustainable water use in a simple and engaging way.
+            </p>
+          </div>
+
+          <!-- Right Card — white-card: استبدل هذه الكارد بصورة white-card.png إذا أردت -->
+          <div class="about-card">
+            <div class="feature">
+              <i class="fas fa-lightbulb"></i>
+              <div>
+                <h4 data-key="feature1Title">Raise Awareness</h4>
+                <p data-key="feature1Text">Educate communities about water scarcity</p>
+              </div>
+            </div>
+
+            <div class="feature">
+              <i class="fas fa-gamepad"></i>
+              <div>
+                <h4 data-key="feature2Title">Gamified Learning</h4>
+                <p data-key="feature2Text">Engage users with fun challenges & rewards.</p>
+              </div>
+            </div>
+
+            <div class="feature">
+              <i class="fas fa-chart-line"></i>
+              <div>
+                <h4 data-key="feature3Title">Sustainable Impact</h4>
+                <p data-key="feature3Text">Drive positive change and responsible use.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TIPS SECTION -->
+      <section class="tips-section scroll-reveal">
+        <h2 class="tips-title" data-key="tipsTitle">AquaMind's Saving Tips</h2>
+
+        <div class="tips-card">
+          <div class="tip-content">
+            <div class="tip-icon">
+              <i class="fa-solid fa-hand-holding-droplet"></i>
+            </div>
+
+            <div class="tip-text">
+              <p>
+                Fixing leaks can save up to
+                <span>10%</span> of water usage
+              </p>
+
+              <div class="progress-bar">
+                <div class="progress"></div>
+              </div>
+
+              <div class="dots">
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <div class="arrow">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHAT WE OFFER -->
+      <section class="what-we-offer-section scroll-reveal">
+        <h2 class="section-title">
+          <!-- white-card: ضع هنا صورة new-product.png على اليسار -->
+          <img src="assets/images/assets/images/new-product.png" alt="icon" class="title-icon title-icon-left" />
+          <span data-key="offerTitle">What We Offer</span>
+          <!-- white-card: ضع هنا صورة reverse.png على اليمين -->
+          <img src="assets/images/assets/images/reverse.png" alt="icon" class="title-icon title-icon-right" />
+        </h2>
+        <div class="cards-container">
+          <a href="aquaguard.html" class="offer-card-link">
+            <div class="offer-card">
+              <img src="assets/images/assets/images/console.png" alt="AquaGuard Icon" class="offer-icon" />
+              <h3 data-key="offer1Title">AquaGuard</h3>
+              <p data-key="offer1Text">
+                Game-based experience that teaches water conservation through challenges.
+              </p>
+            </div>
+          </a>
+          <a href="interactive-house.html" class="offer-card-link">
+            <div class="offer-card">
+              <img src="assets/images/assets/images/home.png" alt="Interactive House Icon" class="offer-icon" />
+              <h3 data-key="offer2Title">Interactive House</h3>
+              <p data-key="offer2Text">
+                Explore a virtual home and learn how daily actions affect water usage.
+              </p>
+            </div>
+          </a>
+          <a href="stories.html" class="offer-card-link">
+            <div class="offer-card">
+              <img src="assets/images/assets/images/impact.png" alt="Stories & Charts Icon" class="offer-icon" />
+              <h3 data-key="offer3Title">Stories & Charts</h3>
+              <p data-key="offer3Text">
+                Visual insights and real stories showing the impact of water consumption.
+              </p>
+            </div>
+          </a>
+          <a href="marketplace.html" class="offer-card-link">
+            <div class="offer-card">
+              <img src="assets/images/assets/images/shopping-cart.png" alt="Market Place Icon" class="offer-icon" />
+              <h3 data-key="offer4Title">Market Place</h3>
+              <p data-key="offer4Text">
+                Browse eco-friendly products that help reduce water consumption daily.
+              </p>
+            </div>
+          </a>
+        </div>
+      </section>
+    </section>
+    <!-- END main-section -->
+
+<!-- 2. Chatbot HTML Structure -->
+<div id="chatbot-container">
+    <!-- Floating Bubble -->
+    <div id="chatbot-bubble" class="chatbot-bubble">
+        <!-- Replace 'AquaMind_logo.png' with your actual logo path if different -->
+        <img src="assets/images/assets/images/AquaMind_logo.png" alt="Chat">
+    </div>
+
+    <!-- Chat Window -->
+    <div id="chatbot-window" class="chatbot-window">
+        <!-- Header -->
+        <div class="chatbot-header">
+            <div class="chatbot-header-info">
+                <img src="assets/images/assets/images/AquaMind_logo.png" alt="Logo" class="chatbot-logo-small">
+                <div>
+                    <h4 class="chatbot-title">AquaMind Assistant</h4>
+                    <p class="chatbot-subtitle">Online | Ask me anything!</p>
+                </div>
+            </div>
+            <button id="chatbot-close" class="chatbot-close">&times;</button>
+        </div>
+
+        <!-- Messages Area -->
+        <div id="chatbot-messages" class="chatbot-messages">
+            <!-- Welcome Message -->
+            <div class="message bot">
+                Hello! 👋 I'm your AquaMind assistant. How can I help you save water today?
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chatbot-input-area">
+            <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Type your question...">
+            <button id="chatbot-send-btn" class="chatbot-send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Chatbot Logic -->
+<script src="assets/js/chatbot.js"></script>
+    
+    <!-- JS FILE -->
+    <script src="assets/js/script.js"></script>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <!-- Logo -->
+        <div class="footer-col logo-col">
+          <img src="assets/images/assets/images/nave pm.png" alt="AquaMind Logo" class="footer-logo" />
+          <p data-key="footerText">
+            Empowering communities with smart water solutions for a sustainable future.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col links-col">
+          <h4 data-key="footerLinks">Quick Links</h4>
+          <ul>
+            <li><a href="index.html" data-key="home">Home</a></li>
+            <li><a href="stories.html" data-key="stories">Stories & Charts</a></li>
+            <li><a href="aquaguard.html" data-key="aquaguard">AquaGuard</a></li>
+            <li><a href="interactive-house.html" data-key="interactive">Interactive House</a></li>
+            <li><a href="marketplace.html" data-key="marketplace">Market Place</a></li>
+          </ul>
+        </div>
+
+        <!-- Social -->
+        <div class="footer-col social-col">
+          <span class="social-label" data-key="followUs">Follow Us</span>
+          <div class="social-icons-row">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <a href="admin-login.html" style="color: inherit; text-decoration: none">©</a>
+        2026 AquaMind. <span data-key="footerRights">All rights reserved.</span>
+      </div>
+    </footer>
+</style>
+
+  </body>
+</html>

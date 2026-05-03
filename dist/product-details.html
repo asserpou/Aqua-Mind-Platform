@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details - AquaMind</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="stylassets/css/e.css">
+    <link rel="stylesheet" href="product-detailassets/css/s.css">
+    <link rel="stylesheet" href="chatboassets/css/t.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.miassets/css/n.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/AquaMind_logo.png" />
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <a href="index.html" class="logo-container">
+            <img src="assets/images/CAquaMind_logo.png" class="logo-img" alt="AquaMind Logo">
+            <span class="logo-text">AquaMind</span>
+        </a>
+
+        <div class="menu">
+            <a href="index.html" data-key="home">Home</a>
+            <a href="stories.html" data-key="stories">Stories&Charts</a>
+            <a href="aquaguard.html" data-key="aquaguard">AquaGuard</a>
+            <a href="interactive-house.html" data-key="interactive">InteractiveHouse</a>
+            <a href="marketplace.html" data-key="marketplace">MarketPlace</a>
+        </div>
+
+        <div class="nav-icons">
+            <div class="divider"></div>
+            <i class="fas fa-user"></i>
+
+            <!-- Language -->
+            <div class="lang-dropdown">
+                <i class="fas fa-globe" id="lang-toggle"></i>
+                <div class="lang-menu" id="lang-menu">
+                    <div class="lang-option" data-lang="en">🇬🇧 English</div>
+                    <div class="lang-option" data-lang="ar">🇸🇦 عربي</div>
+                </div>
+            </div>
+
+            <i class="fas fa-sun" id="theme-toggle"></i>
+            
+            <!-- Hamburger Menu -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <section class="product-details-section">
+        <div class="container">
+            <div class="product-header">
+                <h1 class="product-title" id="productTitle"></h1>
+                <div class="product-price-rating">
+                    <span class="product-price" id="productPrice"></span>
+                    <div class="product-rating" id="productRating"></div>
+                </div>
+            </div>
+
+            <div class="product-content">
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img id="mainImage" src="" alt="Product Image">
+                    </div>
+                    <div class="thumbnail-images" id="thumbnailImages">
+                        <!-- Thumbnails will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="product-info-panel">
+                    <div class="info-section">
+                        <h2 data-i18n="descriptionTitle">Description</h2>
+                        <p id="productDescription"></p>
+                    </div>
+
+                    <div class="info-section">
+                        <h2 data-i18n="usesTitle">Uses</h2>
+                        <ul id="productUses"></ul>
+                    </div>
+
+                    <div class="purchase-section">
+                        <div class="price-quantity">
+                            <span class="price-large" id="priceLarge"></span>
+                            <div class="quantity-control">
+                                <button class="qty-btn" onclick="decreaseQuantity()">−</button>
+                                <input type="number" id="quantity" value="1" min="1" readonly>
+                                <button class="qty-btn" onclick="increaseQuantity()">+</button>
+                            </div>
+                        </div>
+                        <button class="buy-now-btn" onclick="buyNow()" data-i18n="buyNowBtn">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="back-button-container">
+                <button class="back-to-products-btn" onclick="window.location.href='marketplace.html#products-section'">
+                    <i class="fas fa-arrow-left"></i> <span data-i18n="backToProducts">Back to Products</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot -->
+    <div id="chatbot-container">
+        <div id="chatbot-bubble" class="chatbot-bubble">
+            <img src="assets/images/AquaMind_logo.png" alt="Chat">
+        </div>
+        <div id="chatbot-window" class="chatbot-window">
+            <div class="chatbot-header">
+                <div class="chatbot-header-info">
+                    <img src="assets/images/AquaMind_logo.png" alt="Logo" class="chatbot-logo-small">
+                    <div>
+                        <h4 class="chatbot-title">AquaMind Assistant</h4>
+                        <p class="chatbot-subtitle">Online | Ask me anything!</p>
+                    </div>
+                </div>
+                <button id="chatbot-close" class="chatbot-close">&times;</button>
+            </div>
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="message bot">
+                    Hello! 👋 I'm your AquaMind assistant. How can I help you save water today?
+                </div>
+            </div>
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Type your question...">
+                <button id="chatbot-send-btn" class="chatbot-send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/chatbot.js"></script>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <!-- Logo -->
+        <div class="footer-col logo-col">
+          <img src="assets/images/nave pm.png" alt="AquaMind Logo" class="footer-logo" />
+          <p data-key="footerText">
+            Empowering communities with smart water solutions for a sustainable future.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col links-col">
+          <h4 data-key="footerLinks">Quick Links</h4>
+          <ul>
+            <li><a href="index.html" data-key="home">Home</a></li>
+            <li><a href="stories.html" data-key="stories">Stories & Charts</a></li>
+            <li><a href="aquaguard.html" data-key="aquaguard">AquaGuard</a></li>
+            <li><a href="interactive-house.html" data-key="interactive">Interactive House</a></li>
+            <li><a href="marketplace.html" data-key="marketplace">Market Place</a></li>
+          </ul>
+        </div>
+
+        <!-- Social -->
+        <div class="footer-col social-col">
+          <span class="social-label" data-key="followUs">Follow Us</span>
+          <div class="social-icons-row">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <a href="admin-login.html" style="color: inherit; text-decoration: none">©</a>
+        2026 AquaMind. <span data-key="footerRights">All rights reserved.</span>
+      </div>
+    </footer>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+    <script type="module" src="assets/js/product-details.js"></script>
+
+</body>
+
+</html>

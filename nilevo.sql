@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 01, 2026 at 11:53 PM
+-- Generation Time: May 03, 2026 at 11:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -69,7 +69,31 @@ INSERT INTO `chatbot_usage` (`id`, `user_id`, `usage_date`, `message_count`, `up
 (28, 22, '2026-03-30', 1, '2026-03-30 07:12:31'),
 (29, 19, '2026-04-01', 3, '2026-04-01 00:52:34'),
 (32, 2, '2026-04-11', 1, '2026-04-11 10:32:48'),
-(33, 24, '2026-04-28', 2, '2026-04-28 06:28:31');
+(33, 24, '2026-04-28', 2, '2026-04-28 06:28:31'),
+(35, 27, '2026-05-03', 2, '2026-05-03 19:10:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coupon_redemptions`
+--
+
+CREATE TABLE `coupon_redemptions` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `coupon_code` varchar(20) NOT NULL,
+  `voucher_code` varchar(20) NOT NULL,
+  `discount` int(11) NOT NULL DEFAULT 5,
+  `redeemed_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `coupon_redemptions`
+--
+
+INSERT INTO `coupon_redemptions` (`id`, `user_id`, `coupon_code`, `voucher_code`, `discount`, `redeemed_at`) VALUES
+(1, 1, 'T4P911', 'AQ-6491859D', 5, '2026-05-02 03:17:49'),
+(2, 1, 'DR1P42', 'AQ-2D1C29B9', 5, '2026-05-02 03:45:32');
 
 -- --------------------------------------------------------
 
@@ -103,7 +127,9 @@ INSERT INTO `notifications` (`id`, `user_id`, `type`, `actor_id`, `post_id`, `re
 (14, 19, 'reply', 1, 14, 11, 1, '2026-03-11 09:21:55'),
 (15, 1, 'like', 4, 8, NULL, 1, '2026-03-13 09:49:16'),
 (16, 1, 'reply', 4, 8, 12, 1, '2026-03-13 09:50:01'),
-(17, 1, 'like', 19, 8, NULL, 0, '2026-05-01 10:01:15');
+(17, 1, 'like', 19, 8, NULL, 0, '2026-05-01 10:01:15'),
+(18, 1, 'reply', 19, 8, 14, 0, '2026-05-02 07:11:44'),
+(19, 19, 'reply', 27, 15, 15, 0, '2026-05-03 22:12:37');
 
 -- --------------------------------------------------------
 
@@ -131,7 +157,8 @@ INSERT INTO `posts` (`id`, `user_id`, `title`, `body`, `image_path`, `created_at
 (9, 7, 'water is imprtant', 'hello water is important', NULL, '2026-03-09 21:23:13', NULL),
 (10, 9, 'This website helped me with saving water', 'Hello everyone, I am an Egyptian who was used to living as a water profuse, I needed to get better at consuming water and I didn\'t know how to..\nEverything seemed terrible, until the day came.\none day my friend Asser Yasser who is one of this website\'s developers told me about this website, I started using it and that helped me a lot at saving much water everyday!\nI\'m so grateful for my friend Asser, his team members, and this wonderful website ❤.', NULL, '2026-03-09 23:59:29', NULL),
 (14, 19, 'Explain to me One thing', 'How can i reduce my water usage', NULL, '2026-03-11 08:38:01', NULL),
-(15, 19, 'Hi Every one', 'I\'m asking about tips for saving water in garden', NULL, '2026-04-30 16:00:18', '2026-05-01 00:43:53');
+(15, 19, 'Hi Every one', 'I\'m asking about tips for saving water in garden', NULL, '2026-04-30 16:00:18', '2026-05-01 00:43:53'),
+(16, 27, 'hi I am interest in saving water', 'how can i save water', NULL, '2026-05-03 22:12:21', NULL);
 
 -- --------------------------------------------------------
 
@@ -180,7 +207,9 @@ INSERT INTO `replies` (`id`, `post_id`, `user_id`, `body`, `created_at`, `parent
 (10, 9, 1, 'hi :)', '2026-03-09 21:28:27', NULL),
 (11, 14, 1, 'To save water you can take just shorter your showers and use a dishwasher and If you need more tips your can ask the chatbot for more advice on water conservation.', '2026-03-11 09:21:55', NULL),
 (12, 8, 4, 'up', '2026-03-13 09:50:01', NULL),
-(13, 14, 19, 'Thank u ya asser', '2026-04-01 02:21:22', NULL);
+(13, 14, 19, 'Thank u ya asser', '2026-04-01 02:21:22', NULL),
+(14, 8, 19, 'Up', '2026-05-02 07:11:44', NULL),
+(15, 15, 27, 'just use less water', '2026-05-03 22:12:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -190,7 +219,8 @@ INSERT INTO `replies` (`id`, `post_id`, `user_id`, `body`, `created_at`, `parent
 
 CREATE TABLE `scores` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `player_name` varchar(100) NOT NULL DEFAULT 'Guest',
   `time_remaining` float NOT NULL,
   `date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -199,16 +229,17 @@ CREATE TABLE `scores` (
 -- Dumping data for table `scores`
 --
 
-INSERT INTO `scores` (`id`, `user_id`, `time_remaining`, `date`) VALUES
-(16, 6, 3500, '2026-03-08 20:39:26'),
-(17, 5, 4400, '2026-03-08 20:58:25'),
-(18, 4, 1600, '2026-03-09 13:26:38'),
-(20, 7, 3000, '2026-03-09 21:19:25'),
-(21, 8, 1200, '2026-03-09 23:37:37'),
-(23, 9, 3200, '2026-03-10 00:12:14'),
-(29, 18, 1400, '2026-03-10 21:56:02'),
-(30, 19, 1300, '2026-03-11 08:42:19'),
-(36, 1, 5400, '2026-04-30 15:59:15');
+INSERT INTO `scores` (`id`, `user_id`, `player_name`, `time_remaining`, `date`) VALUES
+(18, 4, 'Omar Khaled', 1600, '2026-03-09 13:26:38'),
+(20, 7, 'Zezo Amir', 3000, '2026-03-09 21:19:25'),
+(21, 8, 'omar sob7y', 1200, '2026-03-09 23:37:37'),
+(23, 9, 'MNDAX SH', 3200, '2026-03-10 00:12:14'),
+(29, 18, 'Asser yasser2', 1400, '2026-03-10 21:56:02'),
+(44, NULL, 'Test2', 4800, '2026-05-02 04:10:35'),
+(47, 19, 'Mohamed Maher', 4900, '2026-05-02 07:07:18'),
+(48, NULL, 'Omar', 1200, '2026-05-02 08:22:05'),
+(49, NULL, 'Test', 3300, '2026-05-02 13:16:24'),
+(50, 27, 'asser yasser', 5400, '2026-05-03 22:08:38');
 
 -- --------------------------------------------------------
 
@@ -232,21 +263,24 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `password`, `account_type`, `created_at`) VALUES
-(1, 'asser', 'yasser', 'amasser020@gmail.com', '12345678901', 'asseryasser', 'premium', '2026-03-04 13:10:20'),
-(2, 'Anas', 'yasser', 'amasser010@gmail.com', '01234567890', 'asseryasser', 'standard', '2026-03-04 13:11:12'),
+(1, 'asser', 'yasser', 'amasser020@gmail.com', '12345678901', '123', 'premium', '2026-03-04 13:10:20'),
+(2, 'Anas', 'yasser', 'amasser010@gmail.com', '01234567890', '123', 'standard', '2026-03-04 13:11:12'),
 (4, 'Omar', 'Khaled', 'omarelafi00@gmail.com', '01022163368', '1234', 'premium', '2026-03-04 23:23:19'),
 (5, 'Khaled', 'Ali', 'khaled70maths@gmail.com', '01022163368', '1234', 'Standard', '2026-03-05 18:31:15'),
 (6, 'Abdallah', 'Khaled', 'abdallahelafi12@gmail.com', '01022163368', '1234', 'premium', '2026-03-05 20:59:26'),
-(7, 'Zezo', 'Amir', 'zezoamirsta@gmail.com', '01019831766', '01019831766', 'standard', '2026-03-10 00:06:42'),
+(7, 'Zezo', 'Amir', 'zezoamirsta@gmail.com', '01019831766', '123', 'standard', '2026-03-10 00:06:42'),
 (8, 'omar', 'sob7y', '1312@gmail.com', '123', '123', 'Standard', '2026-03-10 02:34:00'),
-(9, 'MNDAX', 'SH', 'abdosharaf203@gmail.com', '01093599069', 'hiImMNDAX', 'Standard', '2026-03-10 02:40:01'),
+(9, 'MNDAX', 'SH', 'abdosharaf203@gmail.com', '01093599069', '123', 'Standard', '2026-03-10 02:40:01'),
 (10, 'anas tarek', 'anas tarek', 'anastarek340@gmail.com', '01142979110', '123', 'Standard', '2026-03-10 19:11:04'),
 (18, 'Asser', 'yasser2', 'amasser00@gmail.com', '01234567890', 'asseryasser', 'standard', '2026-03-11 00:53:19'),
-(19, 'Mohamed', 'Maher', 'mo7amed.maher.28@gmail.com', '01152292951', 'Mohamed_Maher@2872008', 'premium', '2026-03-11 11:36:08'),
+(19, 'Mohamed', 'Maher', 'mo7amed.maher.28@gmail.com', '01152292951', '123', 'premium', '2026-03-11 11:36:08'),
 (21, 'Karim', 'Diaa', 'karim@gmail.com', '33333330', '1234567890', 'Standard', '2026-03-16 13:28:04'),
 (22, 'malak', 'waleed', 'malakwaleed140@gmail.com', '01026237633', '123456789', 'Standard', '2026-03-30 07:07:24'),
-(23, 'Mohamed', 'Maher', '124075@sta.edu.eg', '01152292951', 'Mohamed_Maher@2872008', 'premium', '2026-04-11 10:04:47'),
-(24, 'Elham', 'ahmed', 'bossyahmed7689@gmail.com', '01101316038', '11xxaA&&', 'Standard', '2026-04-28 06:27:47');
+(23, 'Mohamed', 'Maher', '124075@sta.edu.eg', '01152292951', '123', 'premium', '2026-04-11 10:04:47'),
+(24, 'Elham', 'ahmed', 'bossyahmed7689@gmail.com', '01101316038', '123', 'Standard', '2026-04-28 06:27:47'),
+(25, 'Aqua', 'Mind', 'aquamindgame@gmail.com', '01152292951', 'game123123', 'Standard', '2026-05-02 03:38:13'),
+(26, 'Mazen', 'Khaled', 'mazokhaled191@gmail.com', '01065740316 ', '123', 'Standard', '2026-05-02 03:56:25'),
+(27, 'asser', 'yasser', 'amasser050@gmail.com', '01026710199', '123', 'Standard', '2026-05-03 19:06:21');
 
 -- --------------------------------------------------------
 
@@ -280,7 +314,12 @@ INSERT INTO `vouchers` (`id`, `user_id`, `code`, `discount`, `expires_at`, `used
 (13, 1, 'AQ-B36046AE', 10, '2026-03-19 01:18:35', 1, '2026-03-16 02:18:35'),
 (14, 1, 'AQ-1BE9B909', 20, '2026-03-21 08:04:50', 1, '2026-03-18 09:04:50'),
 (15, 2, 'AQ-BF6DADB1', 20, '2026-04-14 12:35:44', 0, '2026-04-11 12:35:44'),
-(16, 1, 'AQ-68D46AD1', 20, '2026-05-03 14:59:28', 0, '2026-04-30 15:59:28');
+(16, 1, 'AQ-68D46AD1', 20, '2026-05-03 14:59:28', 0, '2026-04-30 15:59:28'),
+(17, 4, 'AQUA5OFF', 5, '2026-05-09 00:19:37', 0, '2026-05-02 01:19:37'),
+(18, 1, 'AQ-6491859D', 5, '2026-05-09 02:17:49', 0, '2026-05-02 03:17:49'),
+(19, 1, 'AQ-2D1C29B9', 5, '2026-05-09 02:45:32', 0, '2026-05-02 03:45:32'),
+(20, 19, 'AQ-63B46E64', 20, '2026-05-05 05:32:37', 1, '2026-05-02 06:32:37'),
+(21, 27, 'AQ-1844CC6C', 20, '2026-05-06 21:09:22', 1, '2026-05-03 22:09:22');
 
 --
 -- Indexes for dumped tables
@@ -299,6 +338,14 @@ ALTER TABLE `admin`
 ALTER TABLE `chatbot_usage`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uq_user_date` (`user_id`,`usage_date`);
+
+--
+-- Indexes for table `coupon_redemptions`
+--
+ALTER TABLE `coupon_redemptions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_user_coupon` (`user_id`,`coupon_code`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `notifications`
@@ -337,7 +384,7 @@ ALTER TABLE `replies`
 --
 ALTER TABLE `scores`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uq_user` (`user_id`);
+  ADD UNIQUE KEY `uq_player` (`player_name`);
 
 --
 -- Indexes for table `user`
@@ -368,19 +415,25 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `chatbot_usage`
 --
 ALTER TABLE `chatbot_usage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `coupon_redemptions`
+--
+ALTER TABLE `coupon_redemptions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `post_likes`
@@ -392,25 +445,25 @@ ALTER TABLE `post_likes`
 -- AUTO_INCREMENT for table `replies`
 --
 ALTER TABLE `replies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `vouchers`
 --
 ALTER TABLE `vouchers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
@@ -421,6 +474,12 @@ ALTER TABLE `vouchers`
 --
 ALTER TABLE `chatbot_usage`
   ADD CONSTRAINT `chatbot_usage_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `coupon_redemptions`
+--
+ALTER TABLE `coupon_redemptions`
+  ADD CONSTRAINT `fk_coupon_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `notifications`
@@ -449,12 +508,6 @@ ALTER TABLE `post_likes`
 ALTER TABLE `replies`
   ADD CONSTRAINT `replies_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `replies_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `scores`
---
-ALTER TABLE `scores`
-  ADD CONSTRAINT `fk_scores_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `vouchers`

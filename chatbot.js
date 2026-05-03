@@ -3,7 +3,7 @@
     // =================================================================
     // 1. API CONFIGURATION — OpenRouter
     // =================================================================
-    const API_KEY = "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";
+    const API_KEY = "Secret";
     const MODEL_NAME = "meta-llama/llama-4-scout-17b-16e-instruct"; // Llama 4 Scout — fast vision model on Groq
     const API_URL = "https://api.groq.com/openai/v1/chat/completions";
 
